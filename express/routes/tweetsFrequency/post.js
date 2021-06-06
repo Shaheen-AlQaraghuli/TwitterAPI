@@ -9,36 +9,56 @@ async function requestHandler(req, res) {
   const getTweetsURL = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${name}&count=200}`
   const getFastAPIURL = 'http://localhost:8000/'
 
+  let resp
+
   try {
-    let resp = await needle('get', getTweetsURL, {
+
+    resp = await needle('get', getTweetsURL, {
       headers: {
         Authorization: `Bearer ${twitterApiBearerToken}`
       }
     })
 
-
     if (resp.statusCode !== 200) {
       res.json("Unexpected error")
       res.status(500)
       res.end()
-    }
-    else {
-      createCSV(resp, name)
-      const payload = {
-        name
-      }
-
-      let imageResponse = await needle('post', getFastAPIURL, payload, { json: true })
-      let imageBase64 = imageResponse.body.image
-
-      deleteFiles(name)
-
-      res.json({ image: imageBase64 })
-      res.status(200)
-      res.end()
+      return
     }
 
   } catch (error) {
+    console.log("tweets/frequency/1")
+    console.dir(error, { depth: Infinity })
+    res.status(500)
+    res.end()
+  }
+
+  try {
+
+    createCSV(resp, name)
+    const payload = {
+      name
+    }
+
+    let imageResponse = await needle('post', getFastAPIURL, payload, { json: true })
+
+    if (imageResponse.statusCode !== 200) {
+      res.json("Unexpected error")
+      res.status(500)
+      res.end()
+      return
+    }
+
+    let imageBase64 = imageResponse.body.image
+
+    deleteFiles(name)
+
+    res.json({ image: imageBase64 })
+    res.status(200)
+    res.end()
+
+  } catch (error) {
+    console.log("tweets/frequency/2")
     console.dir(error, { depth: Infinity })
     res.status(500)
     res.end()
