@@ -108,6 +108,7 @@ Response example:
 {
    "img": "iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlc..."
 } 
+```
 
 Using an online base64 to image converter:
-![graph image](https://user-images.githubusercontent.com/36564017/120932310-51245980-c706-11eb-9d99-81828aa21b3c.jpeg)
+![graph image](https://user-images.githubusercontent.com/36564017/120932351-70bb8200-c706-11eb-85ab-7ae2dca71444.jpeg)
