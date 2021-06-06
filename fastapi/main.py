@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import matplotlib.pyplot as plt
 import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
+import io
+import base64
 
 
 
@@ -14,8 +15,11 @@ class CSV(BaseModel):
 
 @app.post("/")
 def read_root(csv: CSV):
-    print("i am here as well")
     path = "../express/%s.csv" %csv.name
     tweets_df = pd.read_csv(path)
     plot = pd.value_counts(tweets_df['month']).plot.bar()
-    plot.figure.savefig(csv.name)
+    IOBytes = io.BytesIO()
+    plot.figure.savefig(IOBytes, format='png')
+    IOBytes.seek(0)
+    imageBase64 = base64.b64encode(IOBytes.read())
+    return { "image": imageBase64 }

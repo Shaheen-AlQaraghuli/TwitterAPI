@@ -27,13 +27,14 @@ async function requestHandler(req, res) {
       const payload = {
         name
       }
-      await needle('post', getFastAPIURL, payload, { json: true })
-      console.log("here")
-      let image = getImage(name)
 
-      res.json({ img: image })
+      let imageResponse = await needle('post', getFastAPIURL, payload, { json: true })
+      let imageBase64 = imageResponse.body.image
+
+      deleteFiles(name)
+
+      res.json({ image: imageBase64 })
       res.status(200)
-      console.log("here")
       res.end()
     }
 
@@ -45,18 +46,9 @@ async function requestHandler(req, res) {
 
 }
 
-function getImage(name) {
-  const relativePath = `../../../fastapi/${name}.png`
-  const bitmap = fs.readFileSync(path.resolve(__dirname, relativePath))
-  deleteFiles(name)
-  return new Buffer.from(bitmap).toString('base64')
-}
-
 function deleteFiles(name) {
-  const pathPNG = `../../../fastapi/${name}.png`
   const pathCSV = `../../${name}.csv`
 
-  fs.unlinkSync(path.resolve(__dirname, pathPNG))
   fs.unlinkSync(path.resolve(__dirname, pathCSV))
 }
 
