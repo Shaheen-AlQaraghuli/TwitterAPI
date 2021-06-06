@@ -44,14 +44,16 @@ hypercorn main:app
 
 ## Usage
 
-### Get Tweets
+
+
+#### Get Tweets
 
 Using Postman, initiate a POST request to URL:
 ```
 http://localhost:3000/tweets/
 ```
 
-Body: 
+payload: 
 - name: string (required)
 - count: number (optional, 10 by default)
 
@@ -79,7 +81,8 @@ Response example:
 ]
 ```
 
-### Get Tweets Related to Crypto
+
+#### Get Tweets Related to Crypto
 
 Using Postman, initiate a POST request to URL:
 ```
@@ -119,7 +122,8 @@ Response example:
 ```
 
 
-### Get Tweets Frequency Over The Monhts
+
+#### Get Tweets Frequency Over The Monhts
 
 Using Postman, initiate a POST request to URL:
 ```
