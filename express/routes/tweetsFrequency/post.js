@@ -28,18 +28,17 @@ async function requestHandler(req, res) {
         name
       }
       await needle('post', getFastAPIURL, payload, { json: true })
+      console.log("here")
       let image = getImage(name)
 
       res.json({ img: image })
       res.status(200)
+      console.log("here")
       res.end()
     }
 
-    res.json(resp.body)
-    res.status(200)
-    res.end()
   } catch (error) {
-    console.dir(err, { depth: Infinity })
+    console.dir(error, { depth: Infinity })
     res.status(500)
     res.end()
   }

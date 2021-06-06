@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import matplotlib.pyplot as plt
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
+
 
 
 app = FastAPI()
