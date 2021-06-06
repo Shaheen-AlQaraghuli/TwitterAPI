@@ -3,8 +3,8 @@
 ###### What can I do?
 
 - Get recent tweets (up to 200 most recent).
-- Filter tweets from a specified user that may be related to crytocurreny.
-- Returns a graph figure in the base64 format for the disturbution of the most 200 recent tweets over the months for a specified user. 
+- Filter tweets from a specified user that may be related to cryptocurrency.
+- Return a graph figure in the base64 format for the disturbution of the most 200 recent tweets over the months for a specified user. 
 
 ## Getting Started
 
@@ -55,14 +55,28 @@ Body:
 - name: string (required)
 - count: number (optional, 10 by default)
 
-name is the username for the twitter account and count is the number of the most recent tweets to return. Count is set to 10 by default and maximum allowed is 200.
+name is the username for the twitter account, from which the tweets will be retrieved. Count is the number of the most recent tweets to return. Count is set to 10 by default and maximum allowed is 200.
 
-Example:
+Request example:
 ```
 {
-  "name": "user_twitter_username",
-  "count": 20
+  "name": "john_doe",
+  "count": 2
 }
+```
+
+Response example:
+```
+[
+  {
+    "id": "124214233412",
+    "tweet": "@john_doe2 Hi, I have just joined Twitter!"
+  },
+  {
+    "id": "124214233413",
+    "tweet": "@john_doe2 how is it going?"
+  }
+]
 ```
 
 ### Get Tweets Related to Crypto
@@ -75,13 +89,33 @@ http://localhost:3000/tweets/crypto
 Body: 
 - name: string (required)
 
-name is the username for the twitter account. Using a dictionary with common words related to cryptocurrencies. The code will filter the most recent 200 tweets and return the ones that contain at least one word from the dictionary.
+name here refers to the username of the twitter account, from which the tweets will be retrieved. Using a dictionary with common words related to cryptocurrencies. The code will filter the most recent 200 tweets and return the ones that contain at least one word from the dictionary.
 
-Example:
+Request example:
 ```
 {
-  "name": "user_twitter_username"
+  "name": "VitalikButerin"
 }
+```
+
+Response example:
+```
+{
+  "count": 51,
+  "tweetsThatContainCrypto": [
+    {
+      "id": 1400560669351727000,
+      "date": "Thu Jun 03 21:10:59 +0000 2021",
+      "tweet": "RT @lexfridman: Here's my conversation with @VitalikButerin, his second time on the podcast. We talk about @Ethereum, @Bitcoin, @Dogecoin,…"
+    },
+    {
+      "id": 1397298390468219000,
+      "date": "Tue May 25 21:07:51 +0000 2021",
+      "tweet": "Blockchain voting is overrated among uninformed people but underrated among informed people:\n\nhttps://t.co/hLFJuwlT73"
+    },
+    .
+    .
+    .
 ```
 
 
@@ -95,11 +129,11 @@ http://localhost:3000/tweets/frequency
 Body: 
 - name: string (required)
 
-name is the username for the twitter account. The response is an image for the graph figure in base64 format. 
-Example:
+name is the username for the twitter account, from which the tweets will be retrieved.. The response is an image for the graph figure in base64 format. 
+Request example:
 ```
 {
-  "name": "user_twitter_username"
+  "name": "john_doe"
 }
 ```
 
